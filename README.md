@@ -26,4 +26,6 @@ Github is a great platform to work in to prevent continous updation of file name
 I just took help from the page shared by the instructor <a href="https://github.com/STAT545-UBC/STAT545-UBC.github.io/blob/master/hw01_sample_readme.md">here</a> and from what was discussed in the class.
 As I am new to both R and Github working and understanding gapminder and other package will take some time. 
 
+## Gapminder exploration
+The link to the gapminder exploration is <a href="https://github.com/vibudh2209/STAT545-hw01-Agrawal-Vibudh/blob/master/hw01_gapminder.md">this</a>
 
