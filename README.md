@@ -1,7 +1,7 @@
 # STAT545-hw01-Agrawal-Vibudh
 Hi all 
 Welcome to my repo and feel free to navigate. 
-![](https://i.imgur.com/zNssDtS.gif)
+# ![](https://media.giphy.com/media/11clOWGCHzWG7C/giphy.gif)
 ## A little something about me:
 1. I am **Vibudh Agrawal** a new Grad student in the department of *Bioinformatics* 
    - Bioinformatics is interdisciplinary department btw CS and Biology
