@@ -1,8 +1,8 @@
 # STAT545-hw01-Agrawal-Vibudh
 Hi all 
 Welcome to my repo and feel free to navigate. 
-![](goo.gl/79JqCi)
-##A little something about me:
+![](https://i.imgur.com/zNssDtS.gif)
+## A little something about me:
 1. I am **Vibudh Agrawal** a new Grad student in the department of *Bioinformatics* 
    - Bioinformatics is interdisciplinary department btw CS and Biology
    - I am working with **Dr Steven Plotkin** from Physics department
