@@ -21,6 +21,9 @@ Enjoy your day :smiley:
 ## How were the changes made
 All the changes were made locally by pulling to RStudio and comitting the changes here and then pushing them back. No direct changes were made in the Git Hub globally. 
 ### Difficulties
-All the things done above went smoothly and Rmarkdown is pretty fun and interesting to work with. I just took help from the page shared by the instructor <a href="https://github.com/STAT545-UBC/STAT545-UBC.github.io/blob/master/hw01_sample_readme.md">here</a> and from what was discussed in the class.
-As I am new to both R and Github working and understanding with gapminder and other package will take some time. 
+All the things done above went smoothly and Rmarkdown is pretty fun and interesting to work with. 
+Github is a great platform to work in to prevent continous updation of file name and working with a collaborator 
+I just took help from the page shared by the instructor <a href="https://github.com/STAT545-UBC/STAT545-UBC.github.io/blob/master/hw01_sample_readme.md">here</a> and from what was discussed in the class.
+As I am new to both R and Github working and understanding gapminder and other package will take some time. 
+
 

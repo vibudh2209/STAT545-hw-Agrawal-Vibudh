@@ -1,0 +1,53 @@
+---
+title: "Hw01_gapminder"
+output: github_document
+---
+# Here is some working with gapminder
+
+The code is just reference (just to load libraries)
+
+```{r message=FALSE}
+# loading librarys
+library(tidyverse) 
+library(gapminder)
+
+#head(gapminder) 1
+#tail(gapminder)  2
+#str(gapminder)  3
+#summary(gapminder) 4
+#glimpse(gapminder)  5
+#plot(lifeExp ~ year, gapminder) 6
+
+#gapminder$country 
+```
+
+## 1
+```{r}
+summary(head(gapminder))
+```
+## 2
+```{r}
+tail(gapminder)
+```
+
+## 3
+```{r}
+str(gapminder)
+```
+
+## 4
+```{r}
+summary(gapminder)
+```
+
+## 5
+```{r}
+glimpse(gapminder)
+```
+
+## 6
+```{r}
+plot(lifeExp ~ year, gapminder)
+```
+
+Few function of gapminder has been implemented.
