@@ -3,11 +3,23 @@ title: "Exploring Gapminder"
 output: github_document
 ---
 
+# Table of content
+- Determining attributes of gapminder (Smell test the data) [Here](#Header_1)
+- Exploring individual variables [Here](#Header_2)
+
+
+<a name="Header_1">
+</a>
+
+# Determining attributes of gapminder (Smell test the data)
+
+
 Loading the libraries
 
 ```{r,message=FALSE}
 library(gapminder)
 library(tidyverse)
+library(ggplot2)
 ```
 
 Q1) What type is gapminder?
@@ -25,14 +37,12 @@ class(gapminder)
 Q3) How many variables/columns?
 
 ```{r}
-print("Coloumn equal to:")
 ncol(gapminder)
 ```
 
 Q4) How many rows/observations?
 
 ```{r}
-print("Rows equal to:")
 nrow(gapminder)
 ```
 
@@ -40,17 +50,11 @@ Q5) Can you get these facts about “extent” or “size” in more than one wa
  
 ```{r}
 #way 1 using dim command
-print("way 1 using dim command")
-print("Rows equal to:")
-dim(gapminder)[1] 
-print("Coloumn equal to:")
-dim(gapminder)[2]
+dim(gapminder)[1] #Rows
+dim(gapminder)[2] #Coloumns
 #way two using length and transpose command
-print("way two using length and transpose command")
-print("Rows equal to:")
-length(transpose(gapminder))
-print("Coloumn equal to:")
-length(gapminder)
+length(transpose(gapminder)) #Rows
+length(gapminder)  #Coloumns
 ```
 
 Q6) What data type is each variable?
@@ -58,6 +62,57 @@ Q6) What data type is each variable?
 ```{r}
 sapply(gapminder,typeof)
 ```
+
+<a name="Header_2">
+</a>
+
+# Exploring individual variables
+
+Q1) What are possible values (or range, whichever is appropriate) of each variable?
+
+```{r}
+max <- sapply(select(gapminder,year,lifeExp,pop,gdpPercap),max)
+min <- sapply(select(gapminder,year,lifeExp,pop,gdpPercap),min)
+#Range of Years
+c(max[1],min[1])
+#Range of LifeExp
+c(max[2],min[2])
+#Range of Pop
+c(max[3],min[3])
+#Range of gdpPercap
+c(max[4],min[4])
+table(gapminder$country)
+table(gapminder$continent)
+```
+
+Another method using function range (simple!!!)
+
+```{r}
+sapply(select(gapminder,year,lifeExp,pop,gdpPercap),range)
+```
+
+Another method using summary (Yay!!!)
+
+```{r}
+summary(gapminder)
+```
+
+Q2) What values are typical? What’s the spread? What’s the distribution?
+
+```{r}
+ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
+  geom_point(aes(color = continent))
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()+geom_boxplot()
+
+```
+
+
+```{r}
+gapminder %>% 
+  filter(country == "Canada") %>% 
+  ggplot(aes(x = year, y =lifeExp))+geom_point()
+```
+
 
 
 
