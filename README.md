@@ -29,8 +29,8 @@ As I am new to both R and Github working and understanding gapminder and other p
 ## Gapminder exploration
 The link to the gapminder exploration is <a href="https://github.com/vibudh2209/STAT545-hw01-Agrawal-Vibudh/blob/master/hw01_gapminder.md">this</a>
 
-#STAT545-hw02-Agrawal-Vibudh
-The link to second homework is <a href="https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw02"><this</a>
+# STAT545-hw02-Agrawal-Vibudh
+The link to second homework is <a href="https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw02">this</a>
 
 
 
