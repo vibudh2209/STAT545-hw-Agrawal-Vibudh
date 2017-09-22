@@ -6,6 +6,7 @@ Table of content
 
 -   Determining attributes of gapminder (Smell test the data) [Here](#Header_1)
 -   Exploring individual variables [Here](#Header_2)
+-   Exploring various plot types [Here](#Header_3)
 
 <a name="Header_1"> </a>
 
@@ -273,25 +274,155 @@ summary(gapminder)
     ##  Max.   :1.319e+09   Max.   :113523.1  
     ## 
 
-Q2) What values are typical? What’s the spread? What’s the distribution?
+Q2) What values are typical? What’s the spread? What’s the distribution? For findinding the distribution and typical values graphs are plotted, from that peak and spread can be visualised. Peak represent typical values.
 
 ``` r
-ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
-  geom_point(aes(color = continent))
+#Exploring continents
+ggplot(gapminder, aes(x = continent)) + geom_bar()
 ```
 
 ![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png)
 
 ``` r
-ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()+geom_boxplot()
+#Exploring distribution of population (spread and typical values)
+#population based on entire glob
+ggplot(gapminder, aes(x = log10(pop))) + geom_histogram()
 ```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
 ![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-2.png)
 
 ``` r
+#Polpulation contribution by each continent
+ggplot(gapminder, aes(x = log10(pop), fill = continent )) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-3.png)
+
+``` r
+#Polpulation distribution in each continent
+#Africa
 gapminder %>% 
-  filter(country == "Canada") %>% 
-  ggplot(aes(x = year, y =lifeExp))+geom_point()
+  filter(continent == "Africa") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-4.png)
+
+``` r
+#America
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-5.png)
+
+``` r
+#Asia
+gapminder %>% 
+  filter(continent == "Asia") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-6.png)
+
+``` r
+#Europe
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-7.png)
+
+``` r
+#Oceania
+gapminder %>% 
+  filter(continent == "Oceania") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-8.png)
+
+``` r
+#Exploring distribution of lifeExp (spread and typical values)
+#lifeExp based on entire glob
+ggplot(gapminder, aes(x = lifeExp)) + geom_density()
+```
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-9.png)
+
+``` r
+#lifeExp contribution by each continent
+ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
+```
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-10.png)
+
+``` r
+#Exploring distribution of gdpPercap (spread and typical values)
+#gdpPercap based on entire glob
+ggplot(gapminder, aes(x = log10(gdpPercap))) + geom_density()
+```
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-11.png)
+
+``` r
+#gdpPercap ontribution by each continent
+ggplot(gapminder, aes(x = log10(gdpPercap), color = continent)) + geom_density()
+```
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-12.png)
+
+<a name="Header_3"> </a>
+
+Exploring various plot types
+============================
+
+``` r
+gapminder %>% 
+  filter(country %in% c("Canada", "Australia")) %>% 
+  mutate(gdp = gdpPercap * pop) %>% 
+  ggplot(aes(x = log10(gdp), y = lifeExp)) +
+  geom_point(aes(color = country))
 ```
 
 ![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)
+
+``` r
+gapminder %>% 
+  filter(country %in% c("Canada", "Australia")) %>% 
+  ggplot(aes(x = country, y = pop)) + geom_jitter()
+```
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-2.png)
+
+``` r
+gapminder %>% 
+  filter(country %in% c("Canada")) %>% 
+  ggplot(aes(x = gdpPercap)) + geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-3.png)
+
+``` r
+#ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
+#  geom_point(aes(color = continent))
+#ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()+geom_boxplot()
+```

@@ -6,7 +6,7 @@ output: github_document
 # Table of content
 - Determining attributes of gapminder (Smell test the data) [Here](#Header_1)
 - Exploring individual variables [Here](#Header_2)
-
+- Exploring various plot types [Here](#Header_3)
 
 <a name="Header_1">
 </a>
@@ -98,21 +98,72 @@ summary(gapminder)
 ```
 
 Q2) What values are typical? What’s the spread? What’s the distribution?
+For findinding the distribution and typical values graphs are plotted, from that peak and spread can be visualised. Peak represent typical values. 
 
 ```{r}
-ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
-  geom_point(aes(color = continent))
-ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()+geom_boxplot()
-
+#Exploring continents
+ggplot(gapminder, aes(x = continent)) + geom_bar()
+#Exploring distribution of population (spread and typical values)
+#population based on entire glob
+ggplot(gapminder, aes(x = log10(pop))) + geom_histogram()
+#Polpulation contribution by each continent
+ggplot(gapminder, aes(x = log10(pop), fill = continent )) + geom_histogram()
+#Polpulation distribution in each continent
+#Africa
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+#America
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+#Asia
+gapminder %>% 
+  filter(continent == "Asia") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+#Europe
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+#Oceania
+gapminder %>% 
+  filter(continent == "Oceania") %>% 
+  ggplot(aes(x = log10(pop))) + geom_histogram()
+#Exploring distribution of lifeExp (spread and typical values)
+#lifeExp based on entire glob
+ggplot(gapminder, aes(x = lifeExp)) + geom_density()
+#lifeExp contribution by each continent
+ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
+#Exploring distribution of gdpPercap (spread and typical values)
+#gdpPercap based on entire glob
+ggplot(gapminder, aes(x = log10(gdpPercap))) + geom_density()
+#gdpPercap ontribution by each continent
+ggplot(gapminder, aes(x = log10(gdpPercap), color = continent)) + geom_density()
 ```
+
+<a name="Header_3">
+</a>
+
+# Exploring various plot types
 
 
 ```{r}
 gapminder %>% 
-  filter(country == "Canada") %>% 
-  ggplot(aes(x = year, y =lifeExp))+geom_point()
+  filter(country %in% c("Canada", "Australia")) %>% 
+  mutate(gdp = gdpPercap * pop) %>% 
+  ggplot(aes(x = log10(gdp), y = lifeExp)) +
+  geom_point(aes(color = country))
+gapminder %>% 
+  filter(country %in% c("Canada", "Australia")) %>% 
+  ggplot(aes(x = country, y = pop)) + geom_jitter()
+gapminder %>% 
+  filter(country %in% c("Canada")) %>% 
+  ggplot(aes(x = gdpPercap)) + geom_histogram()
+  
+#ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
+#  geom_point(aes(color = continent))
+#ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()+geom_boxplot()
 ```
-
 
 
 
