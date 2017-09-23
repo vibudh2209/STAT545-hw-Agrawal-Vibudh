@@ -5,8 +5,21 @@ output: github_document
 
 # Table of content
 - Determining attributes of gapminder (Smell test the data) [Here](#Header_1)
+      + What type is gapminder? [Here](#Subheader 1_1)
+      + What is the class on gapminder? [Here](#Subheader 1_2)
+      + How many variables/columns? [Here](#Subheader 1_3)
+      + How many rows/observations? [Here](#Subheader 1_4)
+      + Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts? [Here](#Subheader 1_5)
+      + What data type is each variable? [Here](#Subheader 1_5)
+  
 - Exploring individual variables [Here](#Header_2)
+      + What are possible values (or range, whichever is appropriate) of each variable?[Here](#Subheader 2_1) 
+      + What values are typical? What’s the spread? What’s the distribution?[Here](#Subheader 2_2)
+  
 - Exploring various plot types [Here](#Header_3)
+      + A scatterplot of two quantitative variables [Here](#Subheader 3_1)
+      + A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon [Here](#Subheader 3_2)
+      + A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries [Here](#Subheader 3_3)
 
 <a name="Header_1">
 </a>
@@ -22,10 +35,18 @@ library(tidyverse)
 library(ggplot2)
 ```
 
+<a name="Subheader 1_1">
+</a>
+
+
 Q1) What type is gapminder?
 ```{r}
 typeof(gapminder)
 ```
+
+
+<a name="Subheader 1_2">
+</a>
 
 Q2) What is the class on gapminder
 
@@ -34,17 +55,28 @@ class(gapminder)
 ```
 
 
+<a name="Subheader 1_3">
+</a>
+
 Q3) How many variables/columns?
 
 ```{r}
 ncol(gapminder)
 ```
 
+
+<a name="Subheader 1_4">
+</a>
+
 Q4) How many rows/observations?
 
 ```{r}
 nrow(gapminder)
 ```
+
+<a name="Subheader 1_5">
+</a>
+
 
 Q5) Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts?
  
@@ -57,6 +89,10 @@ length(transpose(gapminder)) #Rows
 length(gapminder)  #Coloumns
 ```
 
+
+<a name="Subheader 1_6">
+</a>
+
 Q6) What data type is each variable?
 
 ```{r}
@@ -67,6 +103,9 @@ sapply(gapminder,typeof)
 </a>
 
 # Exploring individual variables
+
+<a name="Subheader 2_1">
+</a>
 
 Q1) What are possible values (or range, whichever is appropriate) of each variable?
 
@@ -97,7 +136,13 @@ Another method using summary (Yay!!!)
 summary(gapminder)
 ```
 
+
+<a name="Subheader 2_2">
+</a>
+
+
 Q2) What values are typical? What’s the spread? What’s the distribution?
+
 For findinding the distribution and typical values graphs are plotted, from that peak and spread can be visualised. Peak represent typical values. 
 
 ```{r}
@@ -146,23 +191,49 @@ ggplot(gapminder, aes(x = log10(gdpPercap), color = continent)) + geom_density()
 
 # Exploring various plot types
 
+<a name="Subheader 3_1">
+</a>
 
+
+Q1) A scatterplot of two quantitative variables.
 ```{r}
 gapminder %>% 
-  filter(country %in% c("Canada", "Australia")) %>% 
+  filter(country %in% c("India","China","Canada","Australia","Japan")) %>% 
   mutate(gdp = gdpPercap * pop) %>% 
   ggplot(aes(x = log10(gdp), y = lifeExp)) +
   geom_point(aes(color = country))
 gapminder %>% 
+  group_by(country) %>% 
+  summarise(mean_pop=log10(mean(pop)), mean_life=mean(lifeExp)) %>% 
+  ggplot(aes(x=mean_pop, y=mean_life)) + geom_point()
+```
+
+
+<a name="Subheader 3_2">
+</a>
+
+Q2) A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon.
+```{r}
+gapminder %>% 
+  filter(country %in% c("India","China","Canada","Australia","Japan")) %>% 
+  ggplot(aes(x = log10(pop), color=country)) + geom_histogram()
+```
+
+
+<a name="Subheader 3_3">
+</a>
+
+Q3) A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
+```{r}
+gapminder %>% 
+  filter(country %in% c("India","China","Canada","Australia","Japan")) %>% 
+  ggplot(aes(x=country,y=log10(pop))) + geom_boxplot()
+gapminder %>% 
   filter(country %in% c("Canada", "Australia")) %>% 
   ggplot(aes(x = country, y = pop)) + geom_jitter()
 gapminder %>% 
-  filter(country %in% c("Canada")) %>% 
-  ggplot(aes(x = gdpPercap)) + geom_histogram()
-  
-#ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
-#  geom_point(aes(color = continent))
-#ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_jitter()+geom_boxplot()
+  mutate(gdp = gdpPercap * pop) %>% 
+  ggplot(aes(x=continent, y = log10(gdp))) + geom_boxplot()
 ```
 
 
