@@ -427,6 +427,7 @@ Exploring various plot types
 Q1) A scatterplot of two quantitative variables.
 
 ``` r
+#Scatter plot of log10(total gdp) vs lifeexp for 5 countries
 gapminder %>% 
   filter(country %in% c("India","China","Canada","Australia","Japan")) %>% 
   mutate(gdp = gdpPercap * pop) %>% 
@@ -437,6 +438,7 @@ gapminder %>%
 ![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)
 
 ``` r
+#Scatter plot for mean of log10(pop) vs mean of lifeExp for all the countries
 gapminder %>% 
   group_by(country) %>% 
   summarise(mean_pop=log10(mean(pop)), mean_life=mean(lifeExp)) %>% 
@@ -450,6 +452,7 @@ gapminder %>%
 Q2) A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon.
 
 ``` r
+#Histogram for log10(pop) for 5 countries 
 gapminder %>% 
   filter(country %in% c("India","China","Canada","Australia","Japan")) %>% 
   ggplot(aes(x = log10(pop), color=country)) + geom_histogram()
@@ -464,6 +467,7 @@ gapminder %>%
 Q3) A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
 
 ``` r
+#Boxplot for 5 country and their population
 gapminder %>% 
   filter(country %in% c("India","China","Canada","Australia","Japan")) %>% 
   ggplot(aes(x=country,y=log10(pop))) + geom_boxplot()
@@ -472,6 +476,7 @@ gapminder %>%
 ![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-1.png)
 
 ``` r
+#Jitter plot for 2 country and their population
 gapminder %>% 
   filter(country %in% c("Canada", "Australia")) %>% 
   ggplot(aes(x = country, y = pop)) + geom_jitter()
@@ -480,6 +485,7 @@ gapminder %>%
 ![](Exploring_Gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-2.png)
 
 ``` r
+#Box plot for log10(total gdp) for all the continents
 gapminder %>% 
   mutate(gdp = gdpPercap * pop) %>% 
   ggplot(aes(x=continent, y = log10(gdp))) + geom_boxplot()
