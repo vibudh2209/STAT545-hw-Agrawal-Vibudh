@@ -1,6 +1,7 @@
 # Table of Contents
 - Homework 1 [Here](#Header1)
 - Homework 2 [Here](#Header2)
+- Homework 3 [Here](#Header3)
 
 
 
@@ -48,6 +49,11 @@ The link to the gapminder exploration is <a href="https://github.com/vibudh2209/
 The link to second homework is <a href="https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw02">this</a>
 
 
+<a name="Header3">
+</a>
+
+# STAT545-hw03-Agrawal-Vibudh
+The link to second homework is [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw03)
 
 
 
