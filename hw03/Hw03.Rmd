@@ -1,0 +1,218 @@
+---
+title: "Hw_03"
+output: github_document
+---
+
+# Content table
+
+- Get the maximum and minimum of GDP per capita for all continents [Here](#Header1)
+- Look at the spread of GDP per capita within the continents [Here](#Header2)
+- Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. Just try something other than the plain vanilla mean [here](#Header3)
+- How is life expectancy changing over time on different continents [Here](#Header4)
+- Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy – you decide – a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year [Here](#Header5)
+- Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class [Here](#Header6)
+
+
+Loading the libraries
+```{r,message=FALSE}
+library(gapminder)
+library(tidyverse)
+```
+
+
+<a name="Header1">
+</a>
+
+# Task list:
+
+1) Get the maximum and minimum of GDP per capita for all continents
+
+What i did in Nutshell:
+
+- Grouped the data by continent
+- Summarized the data based on minimum gdpPercap for each country
+- Plotted normal table and one from knitr package (clearly knitr is much better so just used it from now on)
+- Plotted a box plot  
+
+```{r}
+min_gdppercap <- gapminder %>% 
+  group_by(continent) %>% 
+  summarize(min_gdPercap = min(gdpPercap))
+table(min_gdppercap)
+knitr::kable(min_gdppercap)
+ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()
+```
+
+
+<a name="Header2">
+</a>
+
+Q2) Look at the spread of GDP per capita within the continents.
+
+- First the data is extracted in such a way that we have mean value for gdpPerap for each country for over all years
+- This data is arranged based on continents
+- Table is formed based on this data
+- To visualize spread histograms are plotted for respective continents
+
+```{r}
+spread <- gapminder %>%
+  group_by(country,continent) %>%
+  summarize(gdp_avg=mean(gdpPercap))
+spread <- arrange(spread,continent)
+knitr::kable(head(spread)) #only head is printed as the table is too large
+ggplot(spread,aes(x=gdp_avg))  + facet_wrap(~ continent) + geom_histogram()
+```
+
+
+<a name="Header3">
+</a>
+
+Q3) Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. Just try something other than the plain vanilla mean.
+
+- The data was grouped based on year
+- weighted mean for all the years were taken and summarized
+- Table is plotted
+- The data is visualized by plotting a line plot 
+
+```{r}
+Weighted_life <- gapminder %>% 
+  group_by(year) %>% 
+  summarize(weighted_lE_by_pop = weighted.mean(lifeExp,pop))
+knitr::kable(Weighted_life)
+ggplot(Weighted_life,aes(year,weighted_lE_by_pop)) + geom_line()
+```
+
+
+<a name="Header4">
+</a>
+
+
+Q4) How is life expectancy changing over time on different continents?
+
+- The data was grouped based on years and continent
+- weighted mean for all the years were taken and summarized
+- as the data was also grouped based on continent we get the weighted average by years for each continent
+- the resultant data is arranged based on continents
+- Table is plotted
+- The data is visualized by plotting a line plot 
+
+```{r}
+Weighted_life_cont <- gapminder %>% 
+  group_by(year,continent) %>% 
+  summarize(weighted_lE_by_pop = weighted.mean(lifeExp,pop))
+Weighted_life_cont <- arrange(Weighted_life_cont,continent)
+knitr::kable(Weighted_life_cont)
+ggplot(Weighted_life_cont,aes(year,weighted_lE_by_pop,color=continent)) + geom_line()
+```
+
+
+<a name="Header5">
+</a>
+
+Q5) Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy – you decide – a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
+
+- The threshold selected is median
+- Grouped the data based on continents and years 
+- assigned score 1 if lifeExp more than threshold or 0 otherwise
+- Assigned 1 to each country (done this to count the total number of country in each continent)
+- summarized the data based on percentage of countries have lifeExp more than the threshold
+- arranged the countries based on continents
+- Provided the summary of percentage 
+- provided tail of the table as data is too large
+- provided a visualisation using line plot
+
+```{r}
+lf_measure <- median(gapminder$lifeExp)
+life_threshold <-gapminder %>% 
+  group_by(year,continent) %>% 
+  mutate(size=c(1,0)[(lifeExp<lf_measure) + 1]) %>%
+  mutate(size_con=c(1,0)[(lifeExp<0) + 1]) %>% 
+  #summarise(percentage = sum(size)) %>% 
+  summarise(percentage = sum(size)/sum(size_con)*100) %>% 
+  arrange(continent)
+summary(life_threshold$percentage)
+knitr::kable(tail(life_threshold))
+ggplot(life_threshold,aes(year,percentage,color=continent)) + geom_line()
+```
+
+
+<a name="Header6">
+</a>
+
+Q6) Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
+
+First interesting story about gdP growth!!!
+
+Why its interesting is because negative gdp growth corresponds to decrease in the standard of living and poor facilities and may be due to unavailability of technologies, jobs etc.
+
+What i did in nutshell:
+
+- Grouped the data based on countries
+- Found the difference in gdp for consecutive years
+- Assigned value 1 if its positive growth else 0
+- Switched the values of NA to 1
+- Summarized each country by summing up their number of time positive growth
+- sorted the resultant set
+- Found the number of time the negative growth
+- Provided the top 20 of table as the table is too long
+- Plotted just these 20 of set again to have a better visalisation
+
+
+```{r,warning=FALSE}
+gdp_tren <-gapminder %>% 
+  group_by(country) %>% 
+  mutate(size=c(1,0)[((gdpPercap-lag(gdpPercap,1))<0) + 1])
+gdp_tren$size[is.na(gdp_tren$size)] <- 1
+gdp_tren <-summarize(gdp_tren,gdp_trend=sum(size))
+gdp_tren[[1]] <- gdp_tren[[1]][order(gdp_tren[[2]],decreasing = FALSE)]
+gdp_tren[[2]] <- sort(gdp_tren[[2]],decreasing = FALSE)
+gdp_tren[[2]] <- 12 - gdp_tren[[2]]
+#In here value of gdp_trend variable gives us the number of years with negative gdp Growth for the countries
+#This gives the data for 12 years and out of which how many years each country had negative gdp growth
+# if(0 %in% numbers(gdp_tren))  gdp_tren<- gdp_tren[ - which(gdp_trend(gdp_tren) == 0)]
+# min_index <- which(gdp_tren$gdp_trend==median(gdp_tren$gdp_trend))
+gdp_tren <- head(gdp_tren, 20)
+knitr::kable(gdp_tren)
+ggplot(gdp_tren,aes(x=gdp_trend, color=country)) + geom_histogram() 
+```
+
+
+From the data shown above its interesting to see kuwait in the list of decreasing gdp as its one of the richest country.
+
+Many other countries are expected as they are part of developing nations
+
+Second interesting story about population growth!!!
+
+The Reason why I think its interesting because if a country is having negative population growth then number of deaths are more than number of births which happens if the countries do not have proper medical facilities or very prone to natural disasters or due to war or some other major problem. 
+
+What i did in nutshell:
+
+- Grouped the data based on countries
+- Found the difference in population for consecutive years
+- Assigned value 1 if its positive growth else 0
+- Switched the values of NA to 1
+- Summarized each country by summing up their number of time positive growth
+- sorted the resultant set
+- Found the number of time the negative growth
+- Provided the head of the table as its too long
+- Plotted just the head of set again to have a better visalisation
+
+```{r,warning=FALSE}
+pop_growth <-gapminder %>% 
+  group_by(country) %>%
+  mutate(size=c(1,0)[((pop-lag(pop,1))<0) + 1])
+pop_growth$size[is.na(pop_growth$size)] <- 1
+pop_growth <-summarize(pop_growth,pop_grow=sum(size))
+pop_growth[[1]] <- pop_growth[[1]][order(pop_growth[[2]],decreasing = FALSE)]
+pop_growth[[2]] <- sort(pop_growth[[2]],decreasing = FALSE)
+pop_growth[[2]] <- 12 - pop_growth[[2]]
+#In here value of pop_grow variable gives us the number of years with negative population Growth for the countries
+#This gives the data for 12 years and out of which how many years each country had negative population growth
+pop_growth <- head(pop_growth, 20)
+knitr::kable(pop_growth)
+ggplot(pop_growth,aes(x=pop_grow, color=country)) + geom_histogram() 
+```
+
+Its interesting that there are countries like Germany, ireland, kuwait in this list as they very prosperous countries in the contemporary world
+
+
