@@ -39,8 +39,8 @@ What i did in Nutshell:
 - Plotted normal table and one from knitr package (clearly knitr is much better so just used it from now on)
 - Plotted a box plot  
 
-<div class="twoC">
-```{r results = 'asis', echo=FALSE}
+
+```{r}
 min_gdppercap <- gapminder %>% 
   group_by(continent) %>% 
   summarize(min_gdPercap = min(gdpPercap))
@@ -48,15 +48,6 @@ knitr::kable(min_gdppercap)
 ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()
 ```
 
-</div>
-<div class="clearer"></div>
-
-<style type="text/css">
-.twoC {width: 100%}
-.clearer {clear: both}
-.twoC .table {max-width: 50%; float: right}
-.twoC img {max-width: 50%; float: left}
-</style>
 
 Back to content table [Here](#content)
 

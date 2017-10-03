@@ -1,0 +1,38 @@
+---
+title: "Side_side"
+output: html_document
+---
+
+Get the maximum and minimum of GDP per capita for all continents
+
+What i did in Nutshell:
+
+- Grouped the data by continent
+- Summarized the data based on minimum gdpPercap for each country
+- Plotted normal table and one from knitr package (clearly knitr is much better so just used it from now on)
+- Plotted a box plot  
+
+Loading the libraries
+```{r,message=FALSE}
+library(gapminder)
+library(tidyverse)
+```
+
+<div class="twoC">
+```{r results = 'asis', echo=FALSE}
+min_gdppercap <- gapminder %>% 
+  group_by(continent) %>% 
+  summarize(min_gdPercap = min(gdpPercap))
+knitr::kable(min_gdppercap)
+ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()
+```
+
+</div>
+<div class="clearer"></div>
+
+<style type="text/css">
+.twoC {width: 100%}
+.clearer {clear: both}
+.twoC .table {max-width: 50%; float: right}
+.twoC img {max-width: 50%; float: left}
+</style>
