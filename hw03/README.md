@@ -10,6 +10,8 @@ So the difficult part is just to get to the data which is relevant. But after wo
 
 One thing I like to mention is that I am still not very comfortable with changing the layout and theme of plots constructed using ggplot.
 
+Applying table and figure side by side was little difficult as firstly we have to make html file for that ans as the file was more than 1.4mb it was not shown in github. The markdown file was not showing graphs when html file was made (thus have to commit seperately for html and md file). Hoping that there was a way to do so in github document instead of using html document.
+
 The following sources were used by me:
 
 - For different type of plots [this](https://github.com/jennybc/ggplot2-tutorial), a tutorial given by Jenny
