@@ -2,6 +2,8 @@
 
 The link to markdown file is [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw03/Hw03.md), you will find all the answered questions there.
 
+The link to table and figure side by side is [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw03/Side_side.md) (Markdown link) and [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw03/Side_side.html) (HTML link). But I don't understand why knit in Rstdio gives proper side by side figure but here markdown is not showing that.
+
 # Report your progress
 
 After doing last few homeworks implementing ggplot was not very difficult, so ones the relevant data has been extracted its not very difficult to plot as well as tabulate it.
