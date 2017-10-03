@@ -53,7 +53,7 @@ The link to second homework is <a href="https://github.com/vibudh2209/STAT545-hw
 </a>
 
 # STAT545-hw03-Agrawal-Vibudh
-The link to second homework is [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw03)
+The link to third homework is [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw03)
 
 
 
