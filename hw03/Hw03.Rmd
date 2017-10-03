@@ -1,7 +1,12 @@
 ---
 title: "Hw_03"
-output: github_document
+output: html_document
+
 ---
+
+
+<a name="content">
+</a>
 
 # Content table
 
@@ -34,15 +39,26 @@ What i did in Nutshell:
 - Plotted normal table and one from knitr package (clearly knitr is much better so just used it from now on)
 - Plotted a box plot  
 
-```{r}
+<div class="twoC">
+```{r results = 'asis', echo=FALSE}
 min_gdppercap <- gapminder %>% 
   group_by(continent) %>% 
   summarize(min_gdPercap = min(gdpPercap))
-table(min_gdppercap)
 knitr::kable(min_gdppercap)
 ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()
 ```
 
+</div>
+<div class="clearer"></div>
+
+<style type="text/css">
+.twoC {width: 100%}
+.clearer {clear: both}
+.twoC .table {max-width: 50%; float: right}
+.twoC img {max-width: 50%; float: left}
+</style>
+
+Back to content table [Here](#content)
 
 <a name="Header2">
 </a>
@@ -64,6 +80,8 @@ ggplot(spread,aes(x=gdp_avg))  + facet_wrap(~ continent) + geom_histogram()
 ```
 
 
+Back to content table [Here](#content)
+
 <a name="Header3">
 </a>
 
@@ -82,6 +100,8 @@ knitr::kable(Weighted_life)
 ggplot(Weighted_life,aes(year,weighted_lE_by_pop)) + geom_line()
 ```
 
+
+Back to content table [Here](#content)
 
 <a name="Header4">
 </a>
@@ -105,6 +125,8 @@ knitr::kable(Weighted_life_cont)
 ggplot(Weighted_life_cont,aes(year,weighted_lE_by_pop,color=continent)) + geom_line()
 ```
 
+
+Back to content table [Here](#content)
 
 <a name="Header5">
 </a>
@@ -135,6 +157,8 @@ knitr::kable(tail(life_threshold))
 ggplot(life_threshold,aes(year,percentage,color=continent)) + geom_line()
 ```
 
+
+Back to content table [Here](#content)
 
 <a name="Header6">
 </a>
@@ -173,7 +197,7 @@ gdp_tren[[2]] <- 12 - gdp_tren[[2]]
 # min_index <- which(gdp_tren$gdp_trend==median(gdp_tren$gdp_trend))
 gdp_tren <- head(gdp_tren, 20)
 knitr::kable(gdp_tren)
-ggplot(gdp_tren,aes(x=gdp_trend, color=country)) + geom_histogram() 
+ggplot(gdp_tren,aes(x=gdp_trend)) + geom_histogram(aes(fill=country)) 
 ```
 
 
@@ -210,9 +234,9 @@ pop_growth[[2]] <- 12 - pop_growth[[2]]
 #This gives the data for 12 years and out of which how many years each country had negative population growth
 pop_growth <- head(pop_growth, 20)
 knitr::kable(pop_growth)
-ggplot(pop_growth,aes(x=pop_grow, color=country)) + geom_histogram() 
+ggplot(pop_growth,aes(x=pop_grow)) + geom_histogram(aes(fill=country)) 
 ```
 
 Its interesting that there are countries like Germany, ireland, kuwait in this list as they very prosperous countries in the contemporary world
 
-
+Back to content table [Here](#content)
