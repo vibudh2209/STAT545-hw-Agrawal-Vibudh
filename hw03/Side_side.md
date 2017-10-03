@@ -6,7 +6,6 @@ What i did in Nutshell:
 
 - Grouped data by continent
 - Summarized the data based on minimum gdpPercap for each country
-- Plotted normal table and one from knitr package (clearly knitr is much better so just used it from now on)
 - Plotted a box plot  
 
 Loading the libraries
@@ -31,9 +30,3 @@ Oceania        10039.5956
 </div>
 <div class="clearer"></div>
 
-<style type="text/css">
-.twoC {width: 100%}
-.clearer {clear: both}
-.twoC .table {max-width: 50%; float: right}
-.twoC img {max-width: 50%; float: left}
-</style>
