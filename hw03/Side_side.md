@@ -1,9 +1,4 @@
----
-title: "Side_side"
-output:
-  html_document:
-    keep_md: true
----
+# Side_side
 
 Get the maximum and minimum of GDP per capita for all continents
 
@@ -15,19 +10,23 @@ What i did in Nutshell:
 - Plotted a box plot  
 
 Loading the libraries
-```{r,message=FALSE}
+
+```r
 library(gapminder)
 library(tidyverse)
 ```
 
 <div class="twoC">
-```{r results = 'asis', echo=FALSE}
-min_gdppercap <- gapminder %>% 
-  group_by(continent) %>% 
-  summarize(min_gdPercap = min(gdpPercap))
-knitr::kable(min_gdppercap)
-ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()
-```
+
+continent    min_gdPercap
+----------  -------------
+Africa           241.1659
+Americas        1201.6372
+Asia             331.0000
+Europe           973.5332
+Oceania        10039.5956
+
+![](Side_side_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 </div>
 <div class="clearer"></div>
