@@ -1,6 +1,6 @@
 ---
 title: "Hw_03"
-output: html_document
+output: github_document
 
 ---
 
@@ -10,7 +10,7 @@ output: html_document
 
 # Content table
 
-- Get the maximum and minimum of GDP per capita for all continents [Here](#Header1)
+- Get maximum and minimum of GDP per capita for all continents [Here](#Header1)
 - Look at the spread of GDP per capita within the continents [Here](#Header2)
 - Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. Just try something other than the plain vanilla mean [here](#Header3)
 - How is life expectancy changing over time on different continents [Here](#Header4)
