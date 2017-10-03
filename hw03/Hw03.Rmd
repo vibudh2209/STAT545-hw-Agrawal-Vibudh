@@ -44,6 +44,7 @@ What i did in Nutshell:
 min_gdppercap <- gapminder %>% 
   group_by(continent) %>% 
   summarize(min_gdPercap = min(gdpPercap))
+table(min_gdppercap)
 knitr::kable(min_gdppercap)
 ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()
 ```
