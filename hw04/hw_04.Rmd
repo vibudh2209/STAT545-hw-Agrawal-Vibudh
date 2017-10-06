@@ -1,0 +1,212 @@
+---
+title: "Hw_04"
+output: github_document
+---
+
+# Table of Content
+
+- General data reshaping and relationship to aggregation
+    - Make you own cheatsheet and Make you own cheatsheet and Make up a similar set of exercises for yourself, in the abstract or (even better) using Gapminder or other data, and solve them (Activity 1 and 5 combined)
+    - Make a tibble with one row per year and columns for life expectancy for two or more countries
+    - Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent
+    - Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination.
+
+    
+    
+    
+    
+
+```{r,message=FALSE}
+library(gapminder)
+library(tidyverse)
+library(reshape2)
+```
+
+
+# General data reshaping and relationship to aggregation
+
+## Make you own cheatsheet and Make up a similar set of exercises for yourself, in the abstract or (even better) using Gapminder or other data, and solve them.
+
+Most used functions in tidyl and reshape2 for tidying and reshaping the data are:
+
+```{r,echo=FALSE}
+table <- data.frame(tdyl = c("Gather","Spread"),reshape2=c("Melt","dcast"))
+knitr::kable(table)
+```
+
+
+Example set for displaying result form all four functions:
+
+Data of Species recorded each day.
+
+```{r,echo=FALSE}
+ex_set <- data.frame(
+  day = c("Monday", "Tuesday", "Wednesday"),
+  wolf = c(2, 1, 3),
+  hare = c(20, 25, 30),
+  fox = c(4, 4, 4)
+)
+knitr::kable(ex_set)
+```
+
+
+What each of the four mentioned functions will do is:
+
+So **Gather** and **Melt** will take 
+
+```{r,echo=FALSE}
+knitr::kable(ex_set)
+```
+
+to
+
+```{r,echo=FALSE}
+co_set <- data.frame(
+  day = c("Monday", "Tuesday", "Wednesday","Monday", "Tuesday", "Wednesday","Monday", "Tuesday", "Wednesday"),
+  species = c("wolf","hare","fox","wolf","hare","fox","wolf","hare","fox"),
+  Count = c(2,1,3,20,25,30,4,4,4))
+knitr::kable(co_set)
+```
+
+
+While **Spread** and **dcast** will take it back to 
+
+```{r,echo=FALSE}
+knitr::kable(ex_set)
+```
+
+Syntax used for Gather:
+
+![](https://github.com/vibudh2209/STAT_545_Coursework/blob/master/Screen%20Shot%202017-10-06%20at%203.25.20%20PM.png?raw=true)
+
+Example for Gather
+
+```{r}
+gat <- gather(ex_set,key = 'species',value = 'Count',wolf,hare,fox)
+knitr::kable(gat)
+```
+
+
+
+
+Syntax for Spread;
+
+![](https://github.com/vibudh2209/STAT_545_Coursework/blob/master/Screen%20Shot%202017-10-06%20at%203.26.39%20PM.png?raw=true)
+
+
+Example for spread 
+
+```{r}
+spd <-spread(gat, key = species, value = Count)
+knitr::kable(spd)
+```
+
+
+
+
+Syntax for Melt:
+
+![](https://github.com/vibudh2209/STAT_545_Coursework/blob/master/Screen%20Shot%202017-10-06%20at%203.28.30%20PM.png?raw=true)
+
+
+```{r}
+mt <- melt(ex_set,measure.vars = c("fox","hare","wolf"),variable.name = "species",value.name = "Count")
+knitr::kable(mt)
+```
+
+
+
+Syntax for dcast:
+
+![](https://github.com/vibudh2209/STAT_545_Coursework/blob/master/Screen%20Shot%202017-10-06%20at%203.29.40%20PM.png?raw=true)
+
+Example of dcast
+
+```{r,warning=FALSE}
+dc <- dcast(mt, day ~ species)
+knitr::kable(dc)
+```
+
+
+## Make a tibble with one row per year and columns for life expectancy for two or more countries
+
+
+
+```{r,warning=FALSE}
+filtered_data <- gapminder %>% 
+  filter(country %in% c("Canada","India","China")) %>% 
+  select(country,year,lifeExp)
+tidy_data <- filtered_data %>%
+  spread(key = country,value = lifeExp)
+knitr::kable(tidy_data)
+plot <-ggplot(tidy_data,aes(Canada,India)) + geom_point() + scale_x_continuous(limits = c(35,NA)) + scale_y_continuous(limits = c(35,NA)) + geom_abline(slope = 1)
+plot_2 <- ggplot(tidy_data,aes(China,India)) + geom_point() + scale_x_continuous(limits = c(35,NA)) + scale_y_continuous(limits = c(35,NA)) + geom_abline(slope = 1)
+plot + theme_bw() + labs(title = "LifeExp") + theme(plot.title = element_text(hjust = 0.5))
+plot_2 + theme_bw() + labs(title = "LifeExp") + theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+## Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent
+
+We can plot for each pair of continents how much more life Expectancy is there, which might me little bit hard to do without data being in this format.
+
+```{r,warning=FALSE}
+filtered_data <- gapminder %>% 
+  group_by(continent,year) %>% 
+  summarize(mean_lifeExp=mean(lifeExp))
+tidy_data <- filtered_data %>%
+  spread(key = continent,value = mean_lifeExp)
+knitr::kable(tidy_data)
+E_life <- tidy_data %>% 
+  mutate(Extra_life_E_Am=Europe-Americas) %>% 
+  mutate(Extra_life_E_As=Europe-Asia) 
+ggplot(E_life,aes(year,Extra_life_E_Am)) + geom_point() + scale_y_continuous("Europe-Americas LifeExp") 
+ggplot(E_life,aes(year,Extra_life_E_As)) + geom_point() + scale_y_continuous("Europe-Asia LifeExp")
+```
+
+
+
+
+## Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination.
+
+
+```{r,warning=FALSE}
+filtered <-gapminder %>%
+  select(year,continent, country, lifeExp) %>%
+  group_by(year,continent) %>%
+  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  arrange(continent,year)
+
+tidy_data<-filtered %>%
+  group_by(year,continent) %>%
+  arrange(year,continent,lifeExp) %>% 
+  mutate(con_lif=paste(country,lifeExp)) %>% 
+  mutate(country_combined=paste(con_lif,lead(con_lif,1))) %>% 
+  mutate(con_lif=lead(con_lif,1)) %>% 
+  filter(!is.na(con_lif)) %>% 
+  select(year,continent,country_combined) %>% 
+  spread(key = continent, value = country_combined)
+knitr::kable(tidy_data)
+```
+
+# Join, merge, look up
+
+## Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins.
+
+```{r,warning=FALSE}
+country_data <- data.frame(country=c("Algeria","Angola","Anguilla","Antigua and Barbuda", "Argentina", "Australia", "Azerbaijan", "Bangladesh", "Belarus"), animal=c("Fennec fox","Red-crested turaco","Zenaida dove","Fallow deer","Rufous hornero","Red kangaroo","Karabakh horse","Royal Bengal tiger","European bison"))
+knitr::kable(country_data)
+joined_data_1 <-left_join(gapminder,country_data)
+joined_data_2 <-inner_join(gapminder,country_data)
+joined_data_3 <-full_join(gapminder,country_data)
+joined_data_4 <-semi_join(gapminder,country_data)
+joined_data_5 <-anti_join(gapminder,country_data)
+
+```
+
+
+
+
+
+
+
