@@ -364,7 +364,7 @@ G <- D %>% arrange(max_GDP,Continent,Total_countries)
 knitr::kable(G) 
 ```
 
-
+To go back to Content Table click [here](#header)
 
 # Join, merge, look up
 
