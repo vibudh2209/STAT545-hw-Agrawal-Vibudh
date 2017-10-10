@@ -3,16 +3,21 @@ title: "Hw_04"
 output: github_document
 ---
 
+<a name="header">
+</a>
+
 # Table of Content
 
 - General data reshaping and relationship to aggregation
-    - Make you own cheatsheet and Make you own cheatsheet and Make up a similar set of exercises for yourself, in the abstract or (even better) using Gapminder or other data, and solve them (Activity 1 and 5 combined)
-    - Make a tibble with one row per year and columns for life expectancy for two or more countries
-    - Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent
-    - Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination.
+    - Make you own cheatsheet [here](#header1)
+    - Make a tibble with one row per year and columns for life expectancy for two or more countries [here](#header2)
+    - Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent [here](#header3)
+    - Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination. [here](#header4)
+    - Make you own cheatsheet and Make up a similar set of exercises for yourself, in the abstract or (even better) using Gapminder or other data, and solve them [here](#header5)
+- Join, merge, look up
+    - Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a  dplyr join function and make some observations about the process and result [here](#header6)
+    - Create your own cheatsheet patterned after mine but focused on something you care about more than comics [here](#header7)
 
-    
-    
     
     
 
@@ -24,6 +29,9 @@ library(reshape2)
 
 
 # General data reshaping and relationship to aggregation
+
+<a name="header1">
+</a>
 
 ## Make you own cheatsheet and Make up a similar set of exercises for yourself, in the abstract or (even better) using Gapminder or other data, and solve them.
 
@@ -127,10 +135,20 @@ dc <- dcast(mt, day ~ species)
 knitr::kable(dc)
 ```
 
+To go back to Content Table click [here](#header)
+
+
+<a name="header2">
+</a>
 
 ## Make a tibble with one row per year and columns for life expectancy for two or more countries
 
+What I did in Nutshell:
 
+- Filtered data for country Canada,India,China
+- Selected varibles country, year and lifeExp
+- Used spread command to get country as variables displaying against each year
+- Plotted lifeExp of one country against another and also showed the line (where lifeExp is same for both country), if points above it means country on Y axis has better lifeExp and visa versa
 
 ```{r,warning=FALSE}
 filtered_data <- gapminder %>% 
@@ -146,9 +164,20 @@ plot_2 + theme_bw() + labs(title = "LifeExp") + theme(plot.title = element_text(
 
 ```
 
+To go back to Content Table click [here](#header)
+
+<a name="header3">
+</a>
+
 ## Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent
 
-We can plot for each pair of continents how much more life Expectancy is there, which might me little bit hard to do without data being in this format.
+What I did in Nutshell:
+
+- Grouped the data by continent and year
+- Summarized mean_life exp for each continent per year
+- To get continent as variable used spread command
+- Created a table
+- Plotted for each pair of continents how much more life Expectancy is there, which might me little bit hard to do without data being in this format
 
 ```{r,warning=FALSE}
 filtered_data <- gapminder %>% 
@@ -164,11 +193,28 @@ ggplot(E_life,aes(year,Extra_life_E_Am)) + geom_point() + scale_y_continuous("Eu
 ggplot(E_life,aes(year,Extra_life_E_As)) + geom_point() + scale_y_continuous("Europe-Asia LifeExp")
 ```
 
+To go back to Content Table click [here](#header)
 
-
+<a name="header4">
+</a>
 
 ## Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination.
 
+What I did in Nutshell:
+ 
+- Selected year, continent, country and lifeExp as my variables
+- Grouped the data by year and continent
+- Filtered the data to get highest and lowest lifeExp country for each continent
+- Arranged them by continent and year
+- Grouped the data again by continent and year
+- Arramged the data by first year seconnd continent, and lastly lifeExp
+- Created a new variable con_lif which has information of the country and lifeExp together
+- Created another variable which has name of the country and value of lifeExp for both minimum and maximum lifeExp
+- As lag command is used the first term for each continent will have NA value (in con_lif as well as country_combined variable for eg in country_combined variable NA will be in form "Afghanistan 40 NA" and in con_lif as just "NA")
+- Filtered the rows with NA variable is is.NA
+- Selected year, continent, country_combined variables
+- To get continents as variables used spread command
+- Tabulated the values
 
 ```{r,warning=FALSE}
 filtered <-gapminder %>%
@@ -189,24 +235,248 @@ tidy_data<-filtered %>%
 knitr::kable(tidy_data)
 ```
 
+To go back to Content Table click [here](#header)
+
+<a name="header5">
+</a>
+
+## Make you own cheatsheet and Make up a similar set of exercises for yourself, in the abstract or (even better) using Gapminder or other data, and solve them
+
+Gapminder is used for making the cheat sheet but a compressed version is used which means for each country just one row is there which is average of all the values across all the years and also 8 countries and variables: Country, continent and GDP are used for data manipulation so that results are not very difficult to visualize
+
+
+The data set used is:
+
+```{r, echo=FALSE}
+data_set <-gapminder %>% group_by(country) %>% summarize(Continent = continent[year==1952], LifeExp=mean(lifeExp), Pop=mean(pop), GDP=mean(gdpPercap)) %>% filter(country %in% c("Canada","Australia","Argentina","Japan","India","China","New Zealand","United States")) %>% select(country,Continent,GDP) %>% arrange(Continent)
+A <- data_set
+knitr::kable(A)
+```
+
+
+*GROUP*
+
+Going from A (above) to B (below):
+
+```{r, echo = FALSE}
+knitr::kable(data.frame(Continent = c("Americas","Asia","Oceania"),max_GDP=c("United States","Japan","Australia"), Total_countries = c(3,3,2), Avg_GDP=c(19209.150,6765.491,182621.609)))
+```
+
+
+
+```{r}
+B <- A %>% group_by(Continent) %>% summarise(max_GDP=country[which.max(GDP)],Total_countries = n(),Avg_GDP = mean(GDP))
+knitr::kable(B)
+```
+
+
+*Splitting*
+
+Going from B (above) to C (below)
+
+```{r, echo=FALSE}
+knitr::kable(data.frame(max_GDP=c("Australia", "Japan","United States"), Americas = c(0,0,3),Asia=c(0,3,0),Oceania=c(2,0,0)))
+```
+
+```{r}
+C <- B %>% select(-Avg_GDP) %>% spread(key = "Continent", value=Total_countries)
+C[is.na(C)] <- 0
+knitr::kable(C)
+```
+
+```{r}
+C <- dcast(B,max_GDP ~ Continent, value.var= "Total_countries")
+C[is.na(C)] <-0
+knitr::kable(C)
+```
+
+*Stacking*
+
+ Going from C (above) to D (below)
+ 
+```{r echo=FALSE}
+knitr::kable(data.frame(max_GDP=c("Australia", "Japan","United States","Australia", "Japan","United States","Australia", "Japan","United States"), Continent = c("Americas","Americas","Americas","Asia","Asia","Asia","Oceanaia","Oceanaia","Oceanaia"),Total_countries=c(0,0,3,0,3,0,2,0,0)))
+```
+ 
+ 
+```{r}
+D <- melt(C,id="max_GDP",variable.name = "Continent", value.name = "Total_countries")
+knitr::kable(D)
+```
+
+
+*JOIN*
+
+To C 
+```{r echo=FALSE}
+knitr::kable(C)
+```
+
+Joining countries with least GDP as a new coloumn 
+
+```{r echo=FALSE}
+E <- data.frame(max_GDP=c("Australia","Japan","United States"),min_GDP=c("New Zealand","India","Argentina"))
+knitr::kable(E)
+```
+
+```{r}
+knitr::kable(left_join(C,E))
+```
+
+
+*SUBSET* 
+
+From D
+
+```{r, echo=FALSE}
+knitr::kable(D)
+```
+
+to F
+
+```{r echo=FALSE}
+F <- D %>% filter(Total_countries>0)
+knitr::kable(F)
+```
+
+```{r}
+knitr::kable(D %>% filter(Total_countries>0))
+```
+
+
+*SORT* 
+
+From D
+
+```{r, echo=FALSE}
+knitr::kable(D)
+```
+
+G
+
+```{r echo=FALSE}
+G <- D %>% arrange(max_GDP,Continent,Total_countries)
+knitr::kable(G)                
+```
+
+```{r}
+G <- D %>% arrange(max_GDP,Continent,Total_countries)
+knitr::kable(G) 
+```
+
+
+
 # Join, merge, look up
 
+<a name="header6">
+</a>
+
 ## Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins.
+
+what I did in Nutshell:
+
+- Created another data frame with name of the country and national animal or bird from that country
+- The data frame have country which are part of gapminder and countries whoch are not
+- Displayed the new created data frame
+- Used each join type and tabulated the result
+- For results three sets are displayed for each type of join, first the countries which are in gapminder but not in new set, second which are common to both gapminder and new set and thord which are in new set but not in gapminder
 
 ```{r,warning=FALSE}
 country_data <- data.frame(country=c("Algeria","Angola","Anguilla","Antigua and Barbuda", "Argentina", "Australia", "Azerbaijan", "Bangladesh", "Belarus"), animal=c("Fennec fox","Red-crested turaco","Zenaida dove","Fallow deer","Rufous hornero","Red kangaroo","Karabakh horse","Royal Bengal tiger","European bison"))
 knitr::kable(country_data)
 joined_data_1 <-left_join(gapminder,country_data)
+joined_data_1 %>% filter(country %in% c("India","Canada","China"))
+joined_data_1 %>% filter(country %in% c("Argentina","Australia", "Bangladesh"))
+joined_data_1 %>% filter(country %in% c("Antigua and Barbuda","Belarus"))
 joined_data_2 <-inner_join(gapminder,country_data)
+joined_data_2 %>% filter(country %in% c("India","Canada","China"))
+joined_data_2 %>% filter(country %in% c("Argentina","Australia", "Bangladesh"))
+joined_data_2 %>% filter(country %in% c("Antigua and Barbuda","Belarus"))
 joined_data_3 <-full_join(gapminder,country_data)
+joined_data_3 %>% filter(country %in% c("India","Canada","China"))
+joined_data_3 %>% filter(country %in% c("Argentina","Australia", "Bangladesh"))
+joined_data_3 %>% filter(country %in% c("Antigua and Barbuda","Belarus"))
 joined_data_4 <-semi_join(gapminder,country_data)
+joined_data_4 %>% filter(country %in% c("India","Canada","China"))
+joined_data_4 %>% filter(country %in% c("Argentina","Australia", "Bangladesh"))
+joined_data_4 %>% filter(country %in% c("Antigua and Barbuda","Belarus"))
 joined_data_5 <-anti_join(gapminder,country_data)
+joined_data_5 %>% filter(country %in% c("India","Canada","China"))
+joined_data_5 %>% filter(country %in% c("Argentina","Australia", "Bangladesh"))
+joined_data_5 %>% filter(country %in% c("Antigua and Barbuda","Belarus"))
+```
 
+Results Explained:
+
+- left_join just keep all the country in gapminder but does not add the extra countries from new data set and incorporate the new infromation for the countries in gapminder
+- inner_join just keeps the countries which are common to both gapminder as well as new data set and incorporate the new infromation for the countries
+- full_join keep countries from both gapminder and new data set and incorporate new data for each country
+- semi_join filters the country which are common in gapminder and new data set
+- anti_join filters the country which are there in gapminder but not in new data set
+
+To go back to Content Table click [here](#header)
+
+<a name="header7">
+</a>
+
+## Create your own cheatsheet patterned after mine but focused on something you care about more than comics
+
+```{r results='asix'}
+Intr_cric_data <- data.frame(Player = c("Dhoni","kohli","Corey Anderson","Ab De Villers","Amla","David warner","Steve smith"), Country = c("India","India","NZ","SA","SA","Australia","Australia"), Playing_style=c("Wicket_keeper_bastman","Batsman","All rounder","Batsman","Batsman","Batsman","Batsman"), Height = c("175","175","180","180","183","170","176"))
+Ipl_data <- data.frame(Player = c("kohli","Ab De Villers","Steve smith","Pollard","Ben stoke","Chris gayle"), Team = c("RCB","RCB","RPS","MI","RPS","RCB"))
+knitr::kable(list(Intr_cric_data,Ipl_data),format='markdown')
+```
+
+ 
+    
+    
+Left join Explained:
+
+keep all the players in Int_cric_data but does not add the extra players from new data set and incorporate the new infromation for the palyers in Inr_cric_data
+
+```{r}
+left_join_performed <- left_join(Intr_cric_data,Ipl_data)
+knitr::kable(list(Intr_cric_data,Ipl_data,left_join_performed),format='markdown')
 ```
 
 
+Inner_join Explained:
+
+keeps the players which are common to both Intr_cric_data as well as Ipl_data and incorporate the new infromation for the players
+
+```{r}
+inner_join_performed <- inner_join(Intr_cric_data,Ipl_data)
+knitr::kable(list(Intr_cric_data,Ipl_data,inner_join_performed),format='markdown')
+```
+
+Full_join explained:
+
+Keep players from both Intr_cric_data and Ipl_data and incorporate new data for each player
+
+```{r}
+full_join_performed <- full_join(Intr_cric_data,Ipl_data)
+knitr::kable(list(Intr_cric_data,Ipl_data,full_join_performed),format='markdown')
+```
 
 
+Semi_join Explained
 
+Filters the players which are common in Intr_cric_data and Ipl_data
+
+```{r}
+semi_join_performed <- semi_join(Intr_cric_data,Ipl_data)
+knitr::kable(list(Intr_cric_data,Ipl_data,semi_join_performed),format='markdown')
+```
+
+Anti_join explained
+
+Filters the players which are in Intr_cric_data but not in Ipl_data
+
+```{r}
+anti_join_performed <- anti_join(Intr_cric_data,Ipl_data)
+knitr::kable(list(Intr_cric_data,Ipl_data,anti_join_performed),format='markdown')
+```
+
+To go back to Content Table click [here](#header)
 
 
