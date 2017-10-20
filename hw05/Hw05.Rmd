@@ -3,6 +3,9 @@ title: "Hw05"
 output: github_document
 ---
 
+<a name=HEADER>
+</a>
+
 # Table of Content
 
 - Factor management
@@ -12,6 +15,7 @@ output: github_document
 - Visualization design and Writing figures to file 
     - Qualitative plot [here](#header4)
     - Sequential plot [here](#header5)
+    - Writing figure to file [here](#header6)
 
 Just to show the difference between as.factor() and forcats as_factor() I have considered using singer_location data but for all the rest I have used the gapminder data itself.
 
@@ -66,8 +70,12 @@ knitr::kable(list(head(levels(new_set$title_base_factor),6),head(new_set$title,6
 
 
 
+To go back to Table of Content [here](#HEADER)
+
 <a name=header2>
 </a>
+
+
 
 ### Drop Oceania. Filter the Gapminder data to remove observations associated with the continent of Oceania. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
 
@@ -111,6 +119,7 @@ length(levels(new_set$continent))
 length(levels(new_set_different$continent))
 ```
 
+To go back to Table of Content [here](#HEADER)
 
 <a name=header3>
 </a>
@@ -190,7 +199,7 @@ knitr::kable(comp %>% mutate(level_csv = head(levels(continen_csv$continent)),le
 
 
 
-
+To go back to Table of Content [here](#HEADER)
 
 ## Visualization design and Writing figures to file
 
@@ -235,6 +244,7 @@ p1 + scale_fill_manual(values=brewer.pal(5,"Accent"))
 p1 + scale_fill_manual(values=country_colors)
 ```
 
+To go back to Table of Content [here](#HEADER)
 
 <a name=header5>
 </a>
@@ -265,21 +275,76 @@ p2 + scale_colour_gradient(low="yellow",high="blue")
 p2 + scale_colour_distiller(palette = "RdBu")
 ```
 
+To go back to Table of Content [here](#HEADER)
+
+<a name=header6>
+</a>
 
 ### Writing figures to file
 
-```{r}
+The plots were saved with different dimmensions (width and height) and also with different resolution (dpi)
+
+Following two plots are played with (two plots are taken to show that its important to mention which plot is supposed to be plotted in the argument of ggsave)
+
+```{r, warning=FALSE}
 p1 <-p1 + scale_fill_manual(values=country_colors)
 p2 <-p2 + scale_colour_gradient(low="yellow",high="blue")
-ggsave("scatter1.png",p1,width = 4,height = 4)
-ggsave("scatter2.png",p1,width = 9,height = 4)
-ggsave("scatter3.png",p1,width = 4,height = 9)
-ggsave("scatter4.png",p1,width = 8,height = 8, dpi=300)
-ggsave("scatter5.png",p1,width = 8,height = 8, dpi=500)
-#ggsave("scatter.pdf",p1,width = 4,height = 4)
 ```
 
+- ggsave without argument of which plot to save
+      - So whichever plot is printed last the ggsave will automatically save that so to use ggsave without argument you need to print the plot and save it before printing any other plot
 
+```{r}
+print(p1)
+ggsave("plot1.png",width = 2,height = 2)
+print(p2)
+ggsave("plot2.png",width = 4,height = 4)
+```
+
+The figure for plot1 is:
+
+![Plot 1](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/plot1.png?raw=true)
+
+The figure for plot2 is:
+![Plot 2](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/plot2.png?raw=true)
+
+- Playing around with dimensions:
+
+```{r, warning=FALSE}
+ggsave("scatter1.png",p1,width = 4,height = 4)
+```
+![scatter1](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/scatter1.png?raw=true)
+
+
+```{r, warning=FALSE}
+ggsave("scatter2.png",p1,width = 9,height = 4)
+```
+
+![scatter2](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/scatter2.png?raw=true)
+
+```{r, warning=FALSE}
+ggsave("scatter3.png",p1,width = 4,height = 9)
+```
+
+![scatter3](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/scatter3.png?raw=true)
+
+- Playing with Resolution (dpi)
+
+```{r, warning=FALSE}
+ggsave("scatter4.png",p1,width = 8,height = 8, dpi=300)
+```
+
+![scatter4](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/scatter4.png?raw=true)
+
+```{r, warning=FALSE}
+ggsave("scatter5.png",p1,width = 8,height = 8, dpi=500)
+```
+
+![scatter5](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw05/scatter5.png?raw=true)
+
+
+
+To go back to Table of Content [here](#HEADER)
 
 
 
