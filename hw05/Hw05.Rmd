@@ -8,8 +8,10 @@ output: github_document
 - Factor management
     - Factorise. Transform some of the variable in the singer_locations dataframe into factors: pay attention at what levels you introduce and their order. Try and consider the difference between the base R as.factor and the forcats-provided functions [here](#header1)
     - Drop Oceania. Filter the Gapminder data to remove observations associated with the continent of Oceania. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors [here](#header2)
-    - Reorder the levels of country or continent. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median [here](#header3)
-- n
+    - Reorder the levels of country or continent. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median (This part also involve using different I/O) [here](#header3)
+- Visualization design and Writing figures to file 
+    - Qualitative plot [here](#header4)
+    - Sequential plot [here](#header5)
 
 Just to show the difference between as.factor() and forcats as_factor() I have considered using singer_location data but for all the rest I have used the gapminder data itself.
 
@@ -28,60 +30,256 @@ library(forcats)
 
 ### Factorise. Transform some of the variable in the singer_locations dataframe into factors: pay attention at what levels you introduce and their order. Try and consider the difference between the base R as.factor and the forcats-provided functions
 
+**What I did in Nutshell:**
+
+- Created new variables title_forcats_factor based on forcats library command and title_base_factor based on basic r library
+- Compared individual command with actual order of the variable
+
 ```{r}
 new_set <- singer_locations %>% mutate(title_forcats_factor = as_factor(title), title_base_factor = as.factor(title))
-knitr::kable(head(levels(new_set$title_forcats_factor),10))
-knitr::kable(head(levels(new_set$title_base_factor),10))
-knitr::kable(head(new_set$title,10))
 ```
+
+**Comparing Forcats command with base r command**
+
+- There is a difference in order of levels by forcats and base r. Base r is based on alphabetical order while the forcats follow the order of variable "title" (Which is clear in next step) 
+
+```{r, warning=FALSE}
+knitr::kable(list(head(levels(new_set$title_forcats_factor),6),head(levels(new_set$title_base_factor),6)),format = 'markdown',caption = "Comparision factor Command forcats and base")
+```
+
+
+**Comparing Forcats command with title variable**
+
+- We can see that the order of each level created by forcats command is the same as that of actaul title variable
+
+```{r, warning=FALSE}
+knitr::kable(list(head(levels(new_set$title_forcats_factor),6),head(new_set$title,6)),format = 'markdown',caption = "Comparision factor Command forcats and base")
+```
+
+**Comapring Base r command with title vaiable**
+
+- The levels created by base r are different to those of variable "title", they are arranged in alphabetical order
+
+```{r, warning=FALSE}
+knitr::kable(list(head(levels(new_set$title_base_factor),6),head(new_set$title,6)),format = 'markdown',caption = "Comparision factor Command forcats and base")
+```
+
+
 
 <a name=header2>
 </a>
 
 ### Drop Oceania. Filter the Gapminder data to remove observations associated with the continent of Oceania. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
 
-```{r}
+**What I did in Nutshell:**
+
+- Created two sets in one removed both Oceanina and its corresponding level and called it "new_set" while the second set with just Oceania removed but not level and called it "new_set_different"
+
+*Total number of rows in original gapminder*
+```{r, warning=FALSE}
 nrow(gapminder)
+```
+
+*Total number of levels of continent*
+```{r, warning=FALSE}
 length(levels(gapminder$continent))
+```
+
+*Filtering gapminder by removing Oceania along with its level*
+```{r, warning=FALSE}
 new_set <-gapminder %>% filter(continent != "Oceania") %>% droplevels()
+```
+
+*Filtering gapminder by removing Oceania but not its level*
+```{r, warning=FALSE}
 new_set_different <- gapminder %>% filter(continent != "Oceania")
+```
+
+*Total number of rows in set with Oceania removed*
+```{r, warning=FALSE}
 nrow(new_set)
+```
+
+*Total number of levels of continent in new set with both oceania and level removed*
+```{r, warning=FALSE}
+length(levels(new_set$continent))
+```
+
+*Total number of levels of continent in new set with both oceania but level intact*
+```{r, warning=FALSE}
 length(levels(new_set$continent))
 length(levels(new_set_different$continent))
 ```
 
 
-<a name=header2>
+<a name=header3>
 </a>
 
-### Reorder the levels of country or continent. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median.
+### Reorder the levels of country or continent. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median (This part also involve using different I/O)
 
-```{r}
-ggplot(new_set,aes(continent,pop)) + geom_boxplot() + scale_y_log10()
-new_set %>%  arrange(pop) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10()
-ggplot(new_set,aes(fct_reorder(continent,pop),pop)) + geom_boxplot() + scale_y_log10()
-new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10() 
-new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% arrange(pop) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10()
+**What i did in Nutshell:**
 
+- Plotted box plot of continent vs population (taking log scale at y)
+
+```{r, warning=FALSE}
+new_set <-gapminder
+ggplot(new_set,aes(continent,pop)) + geom_boxplot() + scale_y_log10("Population") + scale_x_discrete("Continents") + labs(title="Continent vs Population") + theme(plot.title = element_text(hjust=0.5)) 
+```
+
+- Arranged the data using population and plotted again
+   - Its clear no change is observed even after using arrange
+
+```{r, warning=FALSE}
+new_set %>%  arrange(pop) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10("Population") + scale_x_discrete("Continents") + labs(title="Continent vs Population") + theme(plot.title = element_text(hjust=0.5)) 
+```
+
+- Again plotted continent vs pop but this time arranging corresponding factors of continents based on the median population
+     - Its clearly evident that the order of continents changed in the plot with increasing order of median population of each continent
+
+```{r, warning=FALSE}
+ggplot(new_set,aes(fct_reorder(continent,pop),pop)) + geom_boxplot() + scale_y_log10("Population") + scale_x_discrete("Continents") + labs(title="Continent vs Population") + theme(plot.title = element_text(hjust=0.5)) 
+```
+
+- Again plotted continent vs pop but this time arranging corresponding factors of continents based on the mean population
+     - Just like above case order of continent is different than that without arranging factors
+   
+```{r, warning=FALSE}
+new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10("Population") + scale_x_discrete("Continents") + labs(title="Continent vs Population") + theme(plot.title = element_text(hjust=0.5)) 
+```
+
+- This time arranged the data with increasing population after arranging the factors based on mean population and as expected there is no change in graph (its exactly similar to the previous case)
+
+```{r, warning=FALSE}
+new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% arrange(pop) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10("Population") + scale_x_discrete("Continents") + labs(title="Continent vs Population") + theme(plot.title = element_text(hjust=0.5)) 
+```
+
+- Saved the data of continent after arranging the factors based on the mean of population in "csv", "rds", "txt" format
+
+```{r, warning=FALSE}
 new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% select(continent) %>% write_csv("continent.csv")
 
 new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% select(continent) %>% saveRDS("continent.rds")
 
 new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% select(continent) %>% dput("continent.txt")
+```
 
+- Loaded these saved files in the new variables (continen_csv,continen_RDS,continen_txt)
+
+```{r, warning=FALSE}
 continen_csv <- read_csv("continent.csv")
 continen_RDS <- readRDS("continent.rds")   
 continen_txt <- dget("continent.txt")  
+```
 
+- Created a new tibble with head of levels in the original continent variable arranged based on mean population (Original levels)
+
+```{r, warning=FALSE}
 comp <- tibble(level_original = head(levels(fct_reorder(new_set$continent,new_set$pop,mean))))
-comp
+```
+
+- Compared the order of levels from three files (csv,rds and txt) with original to see which saving command is able to retain the original levels
+     - It is clear that except write_csv, saveRDS and dput are able to retain the original leveling order of the continent
+
+
+```{r,warning=FALSE}
 continen_csv <- continen_csv %>% mutate(continent = factor(continent))
 continen_RDS <- continen_RDS %>% mutate(continent = factor(continent))
 continen_txt <- continen_txt %>% mutate(continent = factor(continent))
-comp %>% mutate(level_csv = head(levels(continen_csv$continent)),level_RDS = head(levels(continen_RDS$continent)),level_txt = head(levels(continen_txt$continent)))
-
-
+knitr::kable(comp %>% mutate(level_csv = head(levels(continen_csv$continent)),level_RDS = head(levels(continen_RDS$continent)),level_txt = head(levels(continen_txt$continent))))
 ```
+
+
+
+
+
+## Visualization design and Writing figures to file
+
+```{r}
+library(RColorBrewer)
+```
+
+<a name=header4>
+</a>
+
+### Qualitative plot 
+
+**The basic bar plot for further analysis**
+
+- Filtered following countries (Canada,India,China.Japan and Germany) along with the years after 1990
+- Plotted bar graph with x axis as years and y axis as lifeExp, filled the bars based on countries 
+
+```{r, warning=FALSE}
+p1 <- gapminder %>% 
+  filter((country%in%c("Canada","India","China","Japan","Germany") & (year>1990))) %>%
+  ggplot(aes(year)) + geom_bar(aes(weight=lifeExp,fill=country),position = "dodge",width=2,alpha=0.7) + scale_y_continuous("LifeExp") + labs(title="LifeExp vs Year") + theme(plot.title=element_text(hjust=0.5)) + scale_x_continuous(breaks = c(1992,1997,2002,2007))
+print(p1)
+```
+
+**Bar plot colour scheme changed based manual values**
+
+```{r}
+colourid <- c("black","blue","yellow","green","pink")
+p1 + scale_fill_manual(values=colourid)
+```
+
+**Bar plot colour scheme changed based values from the palettes from the brewer package**
+
+
+```{r}
+p1 + scale_fill_manual(values=brewer.pal(5,"Accent"))
+```
+
+**Bar plot colour scheme changed based values from country colour scheme which comes along with the gapminder package**
+
+```{r}
+p1 + scale_fill_manual(values=country_colors)
+```
+
+
+<a name=header5>
+</a>
+
+### Sequential plot
+
+**The basic starting plot for further analysis**
+
+- Filtered following countries (Canada,India,China.Japan and Germany) 
+- Plotted scatter plot with x axis as gdpPercap and y axis as lifeExp and size based on lifeExp, filled the points based on year 
+
+```{r}
+p2 <- gapminder %>% 
+  filter(country%in%c("Canada","India","China","Japan","Germany")) %>%
+  ggplot(aes(gdpPercap,lifeExp,size=lifeExp)) + geom_point(aes(colour=year),alpha=0.6) + labs(title="LifeExp vs gdpPercap") + scale_x_log10() + theme(plot.title = element_text(hjust=0.5))
+print(p2) 
+```
+
+**Scatter plot colour scheme changed based manual values**
+
+```{r}
+p2 + scale_colour_gradient(low="yellow",high="blue")
+```
+
+**Scatter plot colour scheme changed based values from the palettes from the brewer package**
+
+```{r}
+p2 + scale_colour_distiller(palette = "RdBu")
+```
+
+
+### Writing figures to file
+
+```{r}
+p1 <-p1 + scale_fill_manual(values=country_colors)
+p2 <-p2 + scale_colour_gradient(low="yellow",high="blue")
+ggsave("scatter1.png",p1,width = 4,height = 4)
+ggsave("scatter2.png",p1,width = 9,height = 4)
+ggsave("scatter3.png",p1,width = 4,height = 9)
+ggsave("scatter4.png",p1,width = 8,height = 8, dpi=300)
+ggsave("scatter5.png",p1,width = 8,height = 8, dpi=500)
+#ggsave("scatter.pdf",p1,width = 4,height = 4)
+```
+
+
 
 
 
