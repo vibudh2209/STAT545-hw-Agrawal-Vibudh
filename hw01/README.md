@@ -8,14 +8,19 @@
  ## A little something about me:
  
  I am **Vibudh Agrawal** a new Grad student in the department of *Bioinformatics* 
+ 
     - Bioinformatics is interdisciplinary department between CS and Biology
     - I am working with **Dr Steven Plotkin** from Physics department
+    
  2. I did my undergrad from India
+ 
     - By major was **Chemical Engineering**
     - University was *IIT Bombay*
+    
  3. My hobbies include
+ 
     - Playing and following sports
-      - I play *Football*, *Badminton*, *Handball*, *Cricket*, *TT* and follow *Tennis* and *Football*
+    - I play *Football*, *Badminton*, *Handball*, *Cricket*, *TT* and follow *Tennis* and *Football*
     - I like watching English TV shows, movies, Kdramas and Animes
     - I like travelling
  
