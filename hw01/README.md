@@ -7,7 +7,7 @@
  
  ## A little something about me:
  
- I am **Vibudh Agrawal** a new Grad student in the department of *Bioinformatics* 
+ 1. I am **Vibudh Agrawal** a new Grad student in the department of *Bioinformatics* 
  
     - Bioinformatics is interdisciplinary department between CS and Biology
     - I am working with **Dr Steven Plotkin** from Physics department
