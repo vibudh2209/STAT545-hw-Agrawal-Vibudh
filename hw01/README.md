@@ -36,7 +36,7 @@
  
  ## Gapminder exploration
  
- The link to the gapminder exploration is <a href="https://github.com/vibudh2209/STAT545-hw01-Agrawal-Vibudh/blob/master/hw01_gapminder.md">this</a>
+ The link to the gapminder exploration is <a href="https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/blob/master/hw01/hw01_gapminder.md">this</a>
  The link to first homework is [this](https://github.com/vibudh2209/STAT545-hw-Agrawal-Vibudh/tree/master/hw01)
 
 
