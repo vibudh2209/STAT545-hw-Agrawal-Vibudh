@@ -1,0 +1,1 @@
+"0","ggplot(min_gdppercap,aes(x=continent,y=min_gdPercap)) + geom_boxplot()"

@@ -1,0 +1,2 @@
+"0","spd <-spread(gat, key = species, value = Count)"
+"0","knitr::kable(spd)"

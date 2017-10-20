@@ -1,0 +1,13 @@
+"0","new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% select(continent) %>% write_csv(""continent.csv"")"
+"0","new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% select(continent) %>% saveRDS(""continent.rds"")"
+"0","new_set %>% mutate(continent = fct_reorder(continent,pop,mean)) %>% select(continent) %>% dput(""continent.txt"")"
+"0","continen_csv <- read_csv(""continent.csv"")"
+"2","Parsed with column specification:
+cols(
+  continent = col_character()
+)
+"
+"0","continen_RDS <- readRDS(""continent.rds"")   "
+"0","continen_txt <- dget(""continent.txt"")  "
+"0","comp <- tibble(level_original = head(levels(fct_reorder(new_set$continent,new_set$pop,mean))))"
+"0","comp"

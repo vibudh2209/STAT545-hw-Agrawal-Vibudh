@@ -1,0 +1,2 @@
+"0","data_set <-gapminder %>% group_by(country) %>% summarize(Continent = continent[year==1952], LifeExp=mean(lifeExp), Pop=mean(pop), GDP=mean(gdpPercap)) %>% filter(country %in% c(""Canada"",""Australia"",""Argentina"",""Japan"",""India"",""China"",""New Zealand"",""United States"")) %>% select(country,Continent,GDP) %>% arrange(Continent)"
+"0","knitr::kable(data_set)"

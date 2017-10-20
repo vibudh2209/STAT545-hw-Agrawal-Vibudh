@@ -1,0 +1,5 @@
+"0","E <- data.frame(max_GDP=c(""Australia"",""Japan"",""United States""),min_GDP=c(""New Zealand"",""India"",""Argentina""))"
+"0","knitr::kable(left_join(C,E))"
+"2","Joining, by = ""max_GDP""
+"
+"2","Column `max_GDP` joining factors with different levels, coercing to character vector"

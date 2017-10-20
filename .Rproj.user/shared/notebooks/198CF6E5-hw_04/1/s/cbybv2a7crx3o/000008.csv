@@ -1,0 +1,2 @@
+"0","mt <- melt(ex_set,measure.vars = c(""fox"",""hare"",""wolf""),variable.name = ""species"",value.name = ""Count"")"
+"0","knitr::kable(mt)"

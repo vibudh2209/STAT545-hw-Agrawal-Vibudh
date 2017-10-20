@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1508004336080.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3735027777",
+    "id" : "52E44454",
+    "lastKnownWriteTime" : 1508479464,
+    "last_content_update" : 1508479464924,
+    "path" : "~/Applications/abc/hw02/hw05/Hw05.Rmd",
+    "project_path" : "hw05/Hw05.Rmd",
+    "properties" : {
+        "cursorPosition" : "346,46",
+        "scrollLine" : "330",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

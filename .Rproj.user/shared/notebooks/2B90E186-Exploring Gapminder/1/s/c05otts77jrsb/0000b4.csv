@@ -1,0 +1,3 @@
+"0","#Exploring distribution of lifeExp (spread and typical values)"
+"0","#lifeExp based on entire glob"
+"0","ggplot(gapminder, aes(x = lifeExp)) + geom_density()"

@@ -1,0 +1,6 @@
+"0","filtered_data <- gapminder %>% "
+"0","  filter(country %in% c(""Canada"",""India"",""China"")) %>% "
+"0","  select(country,year,lifeExp)"
+"0","tidy_data <- filtered_data %>%"
+"0","  spread(key = country,value = lifeExp)"
+"0","knitr::kable(tidy_data)"

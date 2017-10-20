@@ -1,0 +1,3 @@
+"0","#Exploring distribution of population (spread and typical values)"
+"0","#population based on entire glob"
+"0","ggplot(gapminder, aes(x = log10(pop))) + geom_histogram()"

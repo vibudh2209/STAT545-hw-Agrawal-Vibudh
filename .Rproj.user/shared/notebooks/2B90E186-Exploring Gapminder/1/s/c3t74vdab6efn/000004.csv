@@ -1,0 +1,4 @@
+"0","gapminder %>% "
+"0","  group_by(country) %>% "
+"0","  summarise(mean_pop=log10(mean(pop)), mean_life=mean(lifeExp)) %>% "
+"0","  ggplot(aes(x=mean_pop, y=mean_life)) + geom_point()"

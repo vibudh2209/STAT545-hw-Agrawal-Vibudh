@@ -1,0 +1,2 @@
+"0","#Exploring continents"
+"0","ggplot(gapminder, aes(x = continent)) + geom_bar()"

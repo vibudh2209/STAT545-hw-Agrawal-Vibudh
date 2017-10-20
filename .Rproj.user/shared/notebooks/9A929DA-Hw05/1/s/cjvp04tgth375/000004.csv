@@ -1,0 +1,4 @@
+"0","p2 <- gapminder %>% "
+"0","  filter(country%in%c(""Canada"",""India"",""China"",""Japan"",""Germany"")) %>%"
+"0","  ggplot(aes(gdpPercap,lifeExp,size=lifeExp)) + geom_point(aes(colour=year),alpha=0.6) + labs(title=""LifeExp vs gdpPercap"") + scale_x_log10() + theme(plot.title = element_text(hjust=0.5))"
+"0","print(p2) "

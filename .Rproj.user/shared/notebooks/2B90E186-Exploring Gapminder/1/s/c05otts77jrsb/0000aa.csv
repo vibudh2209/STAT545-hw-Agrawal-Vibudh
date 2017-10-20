@@ -1,0 +1,5 @@
+"0","#Polpulation distribution in each continent"
+"0","#Africa"
+"0","gapminder %>% "
+"0","  filter(continent == ""Africa"") %>% "
+"0","  ggplot(aes(x = log10(pop))) + geom_histogram()"

@@ -1,0 +1,4 @@
+"0","#Europe"
+"0","gapminder %>% "
+"0","  filter(continent == ""Europe"") %>% "
+"0","  ggplot(aes(x = log10(pop))) + geom_histogram()"

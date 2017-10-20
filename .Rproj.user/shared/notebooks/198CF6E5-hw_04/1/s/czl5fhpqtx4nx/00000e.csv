@@ -1,0 +1,2 @@
+"0","B <- A %>% group_by(Continent) %>% summarise(max_GDP=country[which.max(GDP)],Total_countries = n(),Avg_GDP = mean(GDP))"
+"0","knitr::kable(B)"

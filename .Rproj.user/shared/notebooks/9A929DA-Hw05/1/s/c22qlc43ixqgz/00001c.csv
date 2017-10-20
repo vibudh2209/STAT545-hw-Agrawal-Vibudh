@@ -1,0 +1,4 @@
+"0","continen_csv <- continen_csv %>% mutate(continent = factor(continent))"
+"0","continen_RDS <- continen_RDS %>% mutate(continent = factor(continent))"
+"0","continen_txt <- continen_txt %>% mutate(continent = factor(continent))"
+"0","comp %>% mutate(level_csv = head(levels(continen_csv$continent)),level_RDS = head(levels(continen_RDS$continent)),level_txt = head(levels(continen_txt$continent)))"

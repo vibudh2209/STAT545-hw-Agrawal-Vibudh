@@ -1,0 +1,3 @@
+"0","gapminder %>% "
+"0","  mutate(gdp = gdpPercap * pop) %>% "
+"0","  ggplot(aes(x=continent, y = log10(gdp))) + geom_boxplot()"

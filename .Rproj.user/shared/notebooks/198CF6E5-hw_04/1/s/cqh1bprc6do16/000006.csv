@@ -1,0 +1,2 @@
+"0","gat <- gather(ex_set,key = 'species',value = 'Count',wolf,hare,fox)"
+"0","knitr::kable(gat)"

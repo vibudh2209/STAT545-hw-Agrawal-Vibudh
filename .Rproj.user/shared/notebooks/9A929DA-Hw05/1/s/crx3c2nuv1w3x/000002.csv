@@ -1,0 +1,1 @@
+"0","new_set %>%  arrange(pop) %>% ggplot(aes(continent,pop)) + geom_boxplot() + scale_y_log10(""Population"") + scale_x_discrete(""Continents"") + labs(title=""Continent vs Population"") + theme(plot.title = element_text(hjust=0.5)) "

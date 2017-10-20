@@ -1,0 +1,5 @@
+"0","gapminder %>% "
+"0","  filter(country %in% c(""India"",""China"",""Canada"",""Australia"",""Japan"")) %>% "
+"0","  mutate(gdp = gdpPercap * pop) %>% "
+"0","  ggplot(aes(x = log10(gdp), y = lifeExp)) +"
+"0","  geom_point(aes(color = country))"

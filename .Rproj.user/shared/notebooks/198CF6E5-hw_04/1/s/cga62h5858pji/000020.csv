@@ -1,0 +1,4 @@
+"0","E_life <- tidy_data %>% "
+"0","  mutate(Extra_life_E_Am=Europe-Americas) %>% "
+"0","  mutate(Extra_life_E_As=Europe-Asia) "
+"0","ggplot(E_life,aes(year,Extra_life_E_Am)) + geom_point() + scale_y_continuous(""Europe-Americas LifeExp"") "

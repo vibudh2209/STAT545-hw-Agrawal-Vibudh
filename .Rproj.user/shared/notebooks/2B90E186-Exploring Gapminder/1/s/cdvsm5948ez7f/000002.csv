@@ -1,0 +1,3 @@
+"0","gapminder %>% "
+"0","  filter(country %in% c(""India"",""China"",""Canada"",""Australia"",""Japan"")) %>% "
+"0","  ggplot(aes(x = log10(pop), color=country)) + geom_histogram()"

@@ -1,0 +1,2 @@
+"0","#Polpulation contribution by each continent"
+"0","ggplot(gapminder, aes(x = log10(pop), fill = continent )) + geom_histogram()"

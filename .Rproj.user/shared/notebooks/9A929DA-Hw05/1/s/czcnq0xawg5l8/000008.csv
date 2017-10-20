@@ -1,0 +1,2 @@
+"0","#knitr::kable(head(levels(new_set$title_base_factor),10))"
+"0","#knitr::kable(head(new_set$title,10))"

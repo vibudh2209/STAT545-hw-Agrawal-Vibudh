@@ -1,0 +1,6 @@
+"0","filtered_data <- gapminder %>% "
+"0","  group_by(continent,year) %>% "
+"0","  summarize(mean_lifeExp=mean(lifeExp))"
+"0","tidy_data <- filtered_data %>%"
+"0","  spread(key = continent,value = mean_lifeExp)"
+"0","knitr::kable(tidy_data)"

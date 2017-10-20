@@ -1,0 +1,1 @@
+"0","ggplot(E_life,aes(year,Extra_life_E_As)) + geom_point() + scale_y_continuous(""Europe-Asia LifeExp"")"

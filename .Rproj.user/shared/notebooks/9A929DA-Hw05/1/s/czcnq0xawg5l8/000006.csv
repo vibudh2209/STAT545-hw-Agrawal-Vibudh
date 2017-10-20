@@ -1,0 +1,5 @@
+"0","new_set <- singer_locations %>% mutate(title_forcats_factor = as_factor(title), title_base_factor = as.factor(title))"
+"0","knitr::kable(list(head(levels(new_set$title_forcats_factor),6),head(levels(new_set$title_base_factor),6),head(new_set$title,6)),format = 'markdown',caption = ""Comparision factor Command"")"
+"2","The table should have a header (column names)"
+"2","The table should have a header (column names)"
+"2","The table should have a header (column names)"

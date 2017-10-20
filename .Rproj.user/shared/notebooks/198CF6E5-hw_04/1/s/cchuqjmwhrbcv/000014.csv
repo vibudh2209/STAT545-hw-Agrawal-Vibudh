@@ -1,0 +1,4 @@
+"0","dc <- dcast(mt, day ~ species)"
+"2","Using Count as value column: use value.var to override.
+"
+"0","knitr::kable(dc)"

@@ -1,0 +1,2 @@
+"0","#gdpPercap ontribution by each continent"
+"0","ggplot(gapminder, aes(x = log10(gdpPercap), color = continent)) + geom_density()"

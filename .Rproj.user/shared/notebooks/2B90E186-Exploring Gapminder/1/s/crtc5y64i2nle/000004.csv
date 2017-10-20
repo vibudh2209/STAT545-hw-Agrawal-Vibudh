@@ -1,0 +1,3 @@
+"0","gapminder %>% "
+"0","  filter(country %in% c(""Canada"", ""Australia"")) %>% "
+"0","  ggplot(aes(x = country, y = pop)) + geom_jitter()"

@@ -1,0 +1,2 @@
+"0","#lifeExp contribution by each continent"
+"0","ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()"

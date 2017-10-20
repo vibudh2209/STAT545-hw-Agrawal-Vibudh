@@ -1,0 +1,1 @@
+"0","knitr::kable(data.frame(Continent = c(""Americas"",""Asia"",""Oceania""),max_GDP=c(""United States"",""Japan"",""Australia""), Total_countries = c(3,3,2), Avg_GDP=c(19209.150,6765.491,182621.609)))"

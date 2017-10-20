@@ -1,0 +1,2 @@
+"0","D <- melt(C,id=""max_GDP"",variable.name = ""Continent"", value.name = ""Total_countries"")"
+"0","knitr::kable(D)"
